@@ -23,4 +23,10 @@ public class WelcomePage extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    public  void  generateQrCode(View view){
+
+        Intent intent = new Intent(WelcomePage.this, qrCodeGenerator.class);
+        startActivity(intent);
+        finish();
+    }
 }

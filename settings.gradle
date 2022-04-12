@@ -5,6 +5,16 @@ dependencyResolutionManagement {
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
     }
+
 }
 rootProject.name = "QR_IMS"
 include ':app'
+
+
+dependencyResolutionManagement {
+
+    repositories {
+
+        maven { url 'https://jitpack.io' }
+    }
+}
