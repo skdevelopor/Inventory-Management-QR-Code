@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "637504768548",
+    "project_id": "ims-qr-a382d",
+    "storage_bucket": "ims-qr-a382d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637504768548:android:2956e72c63e454d31026b1",
+        "android_client_info": {
+          "package_name": "sk.dev.qr_ims"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637504768548-5pctvrbmenlg7nt1cmuck22rbkkksl36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaT6KTH-02ifojMKTXsWeVGzsAe81cEHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637504768548-5pctvrbmenlg7nt1cmuck22rbkkksl36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
