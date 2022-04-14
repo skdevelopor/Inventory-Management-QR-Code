@@ -25,7 +25,7 @@ FirebaseAuth mAuth;
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser==null){
-            Intent intent = new Intent(MainActivity.this, Register.class);
+            Intent intent = new Intent(MainActivity.this, LogIn.class);
             startActivity(intent);
             finish();
         }

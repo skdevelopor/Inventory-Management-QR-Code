@@ -2,29 +2,54 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/t"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register"
     android:background="@drawable/gradientbackgroun"
 
-   >
+    tools:context=".Register">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/oneicon" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView9"
+            app:srcCompat="@drawable/two" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="271dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/biorhyme_extrabold"
             android:text="REGISTER ACCOUNT"
             android:textColor="#FFFFFF"
@@ -32,89 +57,104 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
-        <EditText
-            android:id="@+id/Remail"
-            android:layout_width="wrap_content"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/log_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+            android:layout_width="329dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
-            android:backgroundTint="#13DA6C"
-            android:ems="10"
-            android:hint="email-id"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:paddingLeft="3dp"
-            android:textColor="#7340ED"
+            android:layout_marginTop="32dp"
+            android:hint="Email-id"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="0.5dp"
+            app:boxStrokeWidthFocused="1dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="30"
+            app:endIconMode="clear_text"
+            app:helperText="Required*"
+            app:helperTextTextColor="#FF0000"
+            app:hintTextColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            tools:ignore="SpeakableTextPresentCheck" />
+            app:startIconDrawable="@drawable/emailicon"
 
-        <EditText
-            android:id="@+id/Rpassword"
-            android:layout_width="wrap_content"
+         >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Remail2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+
+                android:maxLength="30"
+                android:textStyle="normal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/log_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="329dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="#13DA6C"
-            android:ems="10"
-            android:hint="new password"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:paddingLeft="3dp"
+            android:layout_marginTop="32dp"
+            android:hint="Password"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="0.5dp"
+            app:boxStrokeWidthFocused="1dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="30"
+            app:endIconMode="password_toggle"
+            app:helperText="Required*"
+            app:helperTextTextColor="#FF0000"
+            app:hintTextColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Remail"
-            tools:ignore="SpeakableTextPresentCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/log_email"
+            app:startIconDrawable="@drawable/lockicon">
 
-        <Button
-            android:id="@+id/Register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:onClick="createUser"
-            android:text="REGISTER"
-            app:layout_constraintBottom_toTopOf="@+id/Rlogin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:textStyle="normal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <TextView
             android:id="@+id/Rlogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="169dp"
+            android:layout_marginTop="28dp"
             android:onClick="loginpage"
             android:text="Already registered ? click here to login"
             android:textColor="#66ED34"
             android:textSize="16sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/oneicon" />
+            app:layout_constraintTop_toBottomOf="@+id/Register" />
 
-        <ImageView
-            android:id="@+id/imageView5"
+        <Button
+            android:id="@+id/Register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toStartOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="@+id/imageView4"
-            app:srcCompat="@drawable/two" />
+            android:layout_marginTop="32dp"
+            android:onClick="createUser"
+            android:text="REGISTER"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/log_password" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
