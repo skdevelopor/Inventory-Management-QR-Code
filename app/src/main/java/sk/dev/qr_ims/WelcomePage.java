@@ -15,6 +15,9 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
+        Intent intent = new Intent(WelcomePage.this, menu.class);
+        startActivity(intent);
+        finish();
     }
     public  void  logOut(View view){
         FirebaseAuth.getInstance().signOut();
