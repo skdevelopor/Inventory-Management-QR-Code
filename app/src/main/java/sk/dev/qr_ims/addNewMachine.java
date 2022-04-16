@@ -8,17 +8,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import android.util.Log;
+
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -56,7 +57,7 @@ public class addNewMachine extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_machine);
         dateMI=(TextView)findViewById(R.id.dateTV);
         mNameEt=findViewById(R.id.MachineNameET);
-      Log.i("hello","error");
+
 
         qrImage = findViewById(R.id.qrImage2);
 
@@ -120,6 +121,8 @@ public class addNewMachine extends AppCompatActivity {
 
 
     public void uploadImage(Bitmap bitmap,String qrValue) {
+
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
@@ -128,28 +131,55 @@ public class addNewMachine extends AppCompatActivity {
         StorageReference imagesRef = storageReference.child("images/"+qrValue+".jpg");
 
         UploadTask uploadTask = imagesRef.putBytes(data);
+
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-           Log.i("hello",exception.getMessage().toString());
+
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                String mName=mNameEt.getText().toString();
-                String mDate = dateMI.getText().toString();
-                Task<Uri> url = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-             ImageUrl = url.toString();
-             Log.i("hello",ImageUrl);
 
-                MachineDetails machineDetails = new MachineDetails(uid,mName,mDate,ImageUrl);
-                machineDetailsDbRef.child(uid).setValue(machineDetails);
+
+               imagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                  @Override
+                  public void onSuccess(Uri uri) {
+                  ImageUrl= uri.toString();
+                  }
+              }).addOnSuccessListener(new OnSuccessListener<Uri>() {
+                   @Override
+                   public void onSuccess(Uri uri) {
+
+                       String mName=mNameEt.getText().toString();
+                       String mDate = dateMI.getText().toString();
+                       MachineDetails machineDetails = new MachineDetails(uid,mName,mDate,ImageUrl);
+
+                       machineDetailsDbRef.child(uid).setValue(machineDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+                           @Override
+                           public void onSuccess(Void unused) {
+                               Toast.makeText(addNewMachine.this, "added to storage", Toast.LENGTH_SHORT).show();
+                           }
+                       });
+                   }
+               });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
             }
         });
-    }
+        }
 
 
 
@@ -158,4 +188,15 @@ public class addNewMachine extends AppCompatActivity {
 
 
 
-}
+
+
+
+           }
+
+
+
+
+
+
+
+
