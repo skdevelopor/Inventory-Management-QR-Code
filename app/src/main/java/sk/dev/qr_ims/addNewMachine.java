@@ -2,17 +2,23 @@ package sk.dev.qr_ims;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +29,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -37,30 +44,23 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 
 public class addNewMachine extends AppCompatActivity {
-
     ImageView qrImage;
-
+    Button saveButton;
     TextView dateMI;
     EditText mNameEt;
-
     String ImageUrl;
     String uid;
     DatabaseReference machineDetailsDbRef;
-
-  FirebaseStorage storage = FirebaseStorage.getInstance();
-  StorageReference storageReference =storage.getReference();
-
-
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference =storage.getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_machine);
         dateMI=(TextView)findViewById(R.id.dateTV);
         mNameEt=findViewById(R.id.MachineNameET);
-
-
+        saveButton =findViewById(R.id.savebutton);
         qrImage = findViewById(R.id.qrImage2);
-
         machineDetailsDbRef = FirebaseDatabase.getInstance().getReference().child("Machines");
           }
     public void calenderButtonPressed(View view) {
@@ -90,12 +90,13 @@ public class addNewMachine extends AppCompatActivity {
             dateMI.requestFocus();
         }
        else{
+           saveButton.setEnabled(false);
+           disableEditText(mNameEt);
              addMachine();
 
             }
 
    }
-
     private void addMachine() {
 
         uid= UUID.randomUUID().toString();
@@ -104,9 +105,6 @@ public class addNewMachine extends AppCompatActivity {
 
 
               }
-
-
-
     public void addQrCode(String qrValue){
         String data1= qrValue;
             Bitmap qrBitmap;
@@ -118,10 +116,10 @@ public class addNewMachine extends AppCompatActivity {
 
 
 }
-
-
     public void uploadImage(Bitmap bitmap,String qrValue) {
-
+         final ProgressDialog progressDialog = new ProgressDialog(this);
+         progressDialog.setTitle("uploading.....");
+         progressDialog.show();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -135,13 +133,13 @@ public class addNewMachine extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-
+                progressDialog.dismiss();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-
+                progressDialog.dismiss();
                imagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                   @Override
                   public void onSuccess(Uri uri) {
@@ -164,24 +162,24 @@ public class addNewMachine extends AppCompatActivity {
                    }
                });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                double progPercent =(100*snapshot.getBytesTransferred()/snapshot.getTotalByteCount());
+                progressDialog.setMessage("");
             }
         });
+
         }
+    private void disableEditText(EditText editText) {
+        editText.setFocusable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
+        editText.setTextColor(ContextCompat.getColor(addNewMachine.this,R.color.white));
 
-
+    }
 
 
 

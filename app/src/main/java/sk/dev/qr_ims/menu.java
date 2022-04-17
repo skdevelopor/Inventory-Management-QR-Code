@@ -18,7 +18,13 @@ public class menu extends AppCompatActivity {
     public void addNew(View view) {
         Intent intent = new Intent(menu.this,addNewMachine.class);
         startActivity(intent);
-        finish();
+
+    }
+    public void viewAll(View view) {
+        Intent intent = new Intent(menu.this,viewAll.class);
+        startActivity(intent);
+
+
     }
 
 }

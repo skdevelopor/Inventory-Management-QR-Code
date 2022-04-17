@@ -149,6 +149,7 @@
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="20dp"
+                android:onClick="viewAll"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 

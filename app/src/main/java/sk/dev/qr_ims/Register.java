@@ -23,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Register extends AppCompatActivity {
 FirebaseAuth mAuth;
 
-    EditText RPassword;
 
    TextInputLayout tilEmail,tilPassword;
    EditText REmail2,RPassword2 ;
@@ -46,30 +45,6 @@ FirebaseAuth mAuth;
 
 
         mAuth =FirebaseAuth.getInstance();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         RPassword2.addTextChangedListener(new TextWatcher() {

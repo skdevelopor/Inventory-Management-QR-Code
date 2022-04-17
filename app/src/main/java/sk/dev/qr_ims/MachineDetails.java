@@ -6,7 +6,9 @@ public class MachineDetails {
     private  String machineName;
     private String  machineInstallationDate;
     private String  QrImageUrl;
+ MachineDetails(){
 
+ }
     public MachineDetails(String UId, String machineName, String machineInstallationDate, String qrImageUrl) {
         this.UId = UId;
         this.machineName = machineName;
