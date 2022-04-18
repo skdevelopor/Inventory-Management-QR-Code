@@ -112,6 +112,7 @@
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="20dp"
+                android:onClick="doMaintenance"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
@@ -134,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-25dp"
-                        android:text="Maintanance"
+                        android:text="Maintenance"
                         android:textAlignment="center"
                         android:textStyle="bold"></TextView>
                 </LinearLayout>

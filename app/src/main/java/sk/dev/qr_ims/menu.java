@@ -26,5 +26,10 @@ public class menu extends AppCompatActivity {
 
 
     }
+    public void doMaintenance(View view) {
+        Intent intent = new Intent(menu.this,maintenancePage.class);
+        startActivity(intent);
+
+    }
 
 }

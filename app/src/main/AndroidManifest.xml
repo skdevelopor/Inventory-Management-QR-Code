@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sk.dev.qr_ims">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
@@ -15,6 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QR_IMS">
+        <activity
+            android:name=".MaintenancePageTwo"
+            android:exported="true" />
+        <activity
+            android:name=".maintenancePage"
+            android:exported="true" />
         <activity
             android:name=".viewAll"
             android:exported="true" />
