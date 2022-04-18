@@ -3,11 +3,13 @@ package sk.dev.qr_ims;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.print.PrintHelper;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -45,7 +47,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 public class addNewMachine extends AppCompatActivity {
     ImageView qrImage;
-    Button saveButton;
+    Button saveButton,printButton;
     TextView dateMI;
     EditText mNameEt;
     String ImageUrl;
@@ -60,8 +62,11 @@ public class addNewMachine extends AppCompatActivity {
         dateMI=(TextView)findViewById(R.id.dateTV);
         mNameEt=findViewById(R.id.MachineNameET);
         saveButton =findViewById(R.id.savebutton);
+        printButton = findViewById(R.id.printQr);
         qrImage = findViewById(R.id.qrImage2);
         machineDetailsDbRef = FirebaseDatabase.getInstance().getReference().child("Machines");
+        printButton.setVisibility(View.GONE);
+        printButton.setEnabled(false);
           }
     public void calenderButtonPressed(View view) {
         Calendar calendar = Calendar.getInstance();
@@ -92,7 +97,7 @@ public class addNewMachine extends AppCompatActivity {
        else{
            saveButton.setEnabled(false);
            disableEditText(mNameEt);
-             addMachine();
+           addMachine();
 
             }
 
@@ -112,6 +117,8 @@ public class addNewMachine extends AppCompatActivity {
             qrBitmap = qrgEncoder.getBitmap();
             qrImage.setImageBitmap(qrBitmap);
         uploadImage(qrBitmap,qrValue);
+        printButton.setVisibility(View.VISIBLE);
+        printButton.setEnabled(true);
 
 
 
@@ -180,6 +187,16 @@ public class addNewMachine extends AppCompatActivity {
         editText.setTextColor(ContextCompat.getColor(addNewMachine.this,R.color.white));
 
     }
+    public void printButtonMethod(View view){
+        PrintHelper photoPrinter = new PrintHelper(addNewMachine.this);
+        photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+        //Bitmap bitmap = imageView.getDrawingCache(  );
+        Bitmap bitmap = ((BitmapDrawable)qrImage.getDrawable()).getBitmap();
+        photoPrinter.printBitmap("test print",bitmap);
+    }
+
+
+
 
 
 
