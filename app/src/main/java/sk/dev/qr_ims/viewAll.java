@@ -54,6 +54,7 @@ ProgressBar pbar;
                     public void run() {
                         // Set the View's visibility back on the main UI Thread
                         pbar.setVisibility(View.INVISIBLE);
+
                     }
                 });
             }
