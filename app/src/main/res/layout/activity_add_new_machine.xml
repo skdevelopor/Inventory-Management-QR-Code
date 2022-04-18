@@ -61,7 +61,7 @@
         android:id="@+id/savebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="74dp"
+        android:layout_marginTop="64dp"
         android:onClick="saveButton"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"

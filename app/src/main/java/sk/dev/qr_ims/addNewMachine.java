@@ -50,8 +50,7 @@ public class addNewMachine extends AppCompatActivity {
     Button saveButton,printButton;
     TextView dateMI;
     EditText mNameEt;
-    String ImageUrl;
-    String uid;
+    String ImageUrl,uid;
     DatabaseReference machineDetailsDbRef;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference =storage.getReference();
@@ -81,7 +80,6 @@ public class addNewMachine extends AppCompatActivity {
             }
         },mYear,mMonth,mDay);
         datePickerDialog.show();
-
     }
     public void saveButton(View view){
         String mName=mNameEt.getText().toString();
@@ -100,16 +98,12 @@ public class addNewMachine extends AppCompatActivity {
            addMachine();
 
             }
-
    }
     private void addMachine() {
 
         uid= UUID.randomUUID().toString();
         addQrCode(uid);
-
-
-
-              }
+ }
     public void addQrCode(String qrValue){
         String data1= qrValue;
             Bitmap qrBitmap;
@@ -119,24 +113,16 @@ public class addNewMachine extends AppCompatActivity {
         uploadImage(qrBitmap,qrValue);
         printButton.setVisibility(View.VISIBLE);
         printButton.setEnabled(true);
-
-
-
 }
     public void uploadImage(Bitmap bitmap,String qrValue) {
          final ProgressDialog progressDialog = new ProgressDialog(this);
          progressDialog.setTitle("uploading.....");
          progressDialog.show();
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
-
-
         StorageReference imagesRef = storageReference.child("images/"+qrValue+".jpg");
-
         UploadTask uploadTask = imagesRef.putBytes(data);
-
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -145,7 +131,6 @@ public class addNewMachine extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                 progressDialog.dismiss();
                imagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                   @Override
@@ -155,11 +140,9 @@ public class addNewMachine extends AppCompatActivity {
               }).addOnSuccessListener(new OnSuccessListener<Uri>() {
                    @Override
                    public void onSuccess(Uri uri) {
-
                        String mName=mNameEt.getText().toString();
                        String mDate = dateMI.getText().toString();
                        MachineDetails machineDetails = new MachineDetails(uid,mName,mDate,ImageUrl);
-
                        machineDetailsDbRef.child(uid).setValue(machineDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                            @Override
                            public void onSuccess(Void unused) {
@@ -194,18 +177,6 @@ public class addNewMachine extends AppCompatActivity {
         Bitmap bitmap = ((BitmapDrawable)qrImage.getDrawable()).getBitmap();
         photoPrinter.printBitmap("test print",bitmap);
     }
-
-
-
-
-
-
-
-
-
-
-
-
            }
 
 

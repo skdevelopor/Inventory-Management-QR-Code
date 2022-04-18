@@ -12,19 +12,38 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class viewAll extends AppCompatActivity {
 RecyclerView recyclerView;
 AdapterClass myAdapter;
 ProgressBar pbar;
+SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all);
-      pbar = findViewById(R.id.progressBar4);
+        pbar = findViewById(R.id.progressBar4);
         recyclerView = findViewById(R.id.recView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        searchView = findViewById(R.id.sv);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
 
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterText(s);
+                return true;
+            }
+        });
         FirebaseRecyclerOptions<MachineDetails> options =
                 new FirebaseRecyclerOptions.Builder<MachineDetails>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("Machines"), MachineDetails.class)
@@ -74,6 +93,19 @@ ProgressBar pbar;
 
 
     }
+
+    private void filterText(String s) {
+        FirebaseRecyclerOptions<MachineDetails> options =
+                new FirebaseRecyclerOptions.Builder<MachineDetails>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Machines").orderByChild("uid").startAt(s).endAt(s+"\uf8ff"), MachineDetails.class)
+
+                        .build();
+        myAdapter= new AdapterClass(options);
+        myAdapter.startListening();
+        recyclerView.setAdapter(myAdapter);
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
