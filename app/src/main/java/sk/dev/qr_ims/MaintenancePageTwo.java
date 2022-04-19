@@ -4,16 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,13 +28,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 public class MaintenancePageTwo extends AppCompatActivity {
     TextView mid,mName,mId;
     String value;
     DatabaseReference mDatabase;
-
-
-
+    TextView dateMI;
+Button b1;
+    TextInputLayout servDescription,TechName;
+    EditText serDesET,TechNameET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +47,13 @@ public class MaintenancePageTwo extends AppCompatActivity {
         value = getIntent().getStringExtra("qrValue");
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mName = findViewById(R.id.mpMname);
+        servDescription =findViewById(R.id.ServiceDescriptionLayout);
+                TechName =findViewById(R.id.TechniciansnameLayout);
+        serDesET = findViewById(R.id.ServiceDescriptionTextView);
+        TechNameET=findViewById(R.id.techName);
         mId=findViewById(R.id.mpMiD);
-
+dateMI = findViewById(R.id.dateTVmp2);
+b1 = findViewById(R.id.button3);
 
 
 
@@ -71,7 +86,6 @@ public class MaintenancePageTwo extends AppCompatActivity {
 
 
     }
-
     private void setAlert() {
 
         new AlertDialog.Builder(MaintenancePageTwo.this)
@@ -90,7 +104,6 @@ public class MaintenancePageTwo extends AppCompatActivity {
                 .show();
 
     }
-
     private void getData() {
         mDatabase.child("Machines").child(value).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -100,9 +113,9 @@ public class MaintenancePageTwo extends AppCompatActivity {
 
                 }
                 else {
-                    mid.setText(value);
-                    mId.setText(task.getResult().child("machineInstallationDate").getValue().toString());
-                    mName.setText(task.getResult().child("machineName").getValue().toString());
+                    mid.setText("Machine id: "+value);
+                    mId.setText("Machine Installation Date: "+task.getResult().child("machineInstallationDate").getValue().toString());
+                    mName.setText("Machine Name: "+task.getResult().child("machineName").getValue().toString());
 
 
                 }
@@ -110,6 +123,50 @@ public class MaintenancePageTwo extends AppCompatActivity {
             }
 
         });
+
+    }
+   public void calenderButtonPressed(View view){
+       Calendar calendar = Calendar.getInstance();
+       int mDay,mMonth,mYear;
+       mYear= calendar.get(Calendar.YEAR);
+       mMonth =calendar.get(Calendar.MONTH);
+       mDay =calendar.get(Calendar.DAY_OF_MONTH);
+       DatePickerDialog datePickerDialog = new DatePickerDialog(MaintenancePageTwo.this, new DatePickerDialog.OnDateSetListener() {
+           @Override
+           public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+               dateMI.setText(i2+"-"+i1+"-"+i);
+           }
+       },mYear,mMonth,mDay);
+       datePickerDialog.show();
+   }
+    public void saveButtonMaintenancep2(View view){
+        String serviceDES=serDesET.getText().toString();
+        String TechNaME =TechNameET.getText().toString();
+        String dateOfNextService = dateMI.getText().toString();
+        if(TextUtils.isEmpty(serviceDES)){
+            serDesET.setError("Description is Required");
+           serDesET.requestFocus();
+        }
+        else if(TextUtils.isEmpty(TechNaME)){
+          TechNameET.setError("Technician name is required ");
+           TechNameET.requestFocus();
+        }
+
+
+        else if(TextUtils.isEmpty(dateOfNextService)){
+            dateMI.setError("Enter the Date");
+            dateMI.requestFocus();
+        }
+        else{
+           b1.setEnabled(false);
+           serDesET.setEnabled(false);
+            TechNameET.setEnabled(false);
+            addMaintananceDetails();
+                   }
+    }
+
+    private void addMaintananceDetails() {
+
 
     }
 

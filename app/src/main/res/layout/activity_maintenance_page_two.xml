@@ -7,33 +7,167 @@
     tools:context=".MaintenancePageTwo">
 
     <TextView
-        android:id="@+id/machinetv2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02" />
-
-    <TextView
         android:id="@+id/mpMname"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="15dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/mainttvbg"
+        android:padding="10dp"
+        android:textColor="#5E35B1"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/machinetv2" />
 
     <TextView
-        android:id="@+id/mpMiD"
-        android:layout_width="0dp"
+        android:id="@+id/machinetv2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="15dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/mainttvbg"
+        android:padding="10dp"
+        android:textColor="#5E35B1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mpMiD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/mainttvbg"
+        android:padding="10dp"
+        android:textColor="#5E35B1"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mpMname" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ServiceDescriptionLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="329dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="8dp"
+        app:boxStrokeColor="#0BF416"
+        android:hint="Service Description"
+        android:padding="10dp"
+        android:textColorHint="#FF0BF416"
+        app:boxStrokeErrorColor="#FF0000"
+        app:boxStrokeWidth="2dp"
+        app:boxStrokeWidthFocused="1dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="1000"
+        app:endIconMode="clear_text"
+        app:errorTextColor="#FF0000"
+        app:helperText="Required*"
+        app:helperTextTextColor="#FF0000"
+        app:hintTextColor="#0BF416"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mpMiD"
+        app:startIconDrawable="@drawable/ic_info">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ServiceDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLength="1000"
+            android:textColor="#0BF416"
+            android:textColorHighlight="#FF0BF416"
+            android:textColorHint="#FF0BF416"
+            android:textColorLink="#FF0BF416"
+            android:textStyle="normal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/TechniciansnameLayout"
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="329dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="8dp"
+        android:hint="Technician Name"
+        android:padding="10dp"
+        android:textColorHint="#FF0BF416"
+        app:boxStrokeColor="#0BF416"
+        app:boxStrokeErrorColor="#FF0000"
+        app:boxStrokeWidth="0.5dp"
+        app:boxStrokeWidthFocused="1dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+
+        app:endIconMode="clear_text"
+        app:errorTextColor="#FF0000"
+        app:helperText="Required*"
+        app:helperTextTextColor="#FF0000"
+        app:hintTextColor="#0BF416"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ServiceDescriptionLayout"
+        app:startIconDrawable="@drawable/ic_mech">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/techName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="30"
+            android:textColor="#0BF416"
+            android:textColorHighlight="#FF0BF416"
+            android:textColorHint="#FF0BF416"
+            android:textColorLink="#FF0BF416"
+            android:textStyle="normal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/dateTVmp2"
+        style="@android:style/Widget.EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:hint="mm/dd/yyyy"
+        android:onClick="calenderButtonPressed"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/calenderButton2"
+        app:layout_constraintTop_toBottomOf="@+id/TechniciansnameLayout" />
+
+    <ImageButton
+        android:id="@+id/calenderButton2"
+        android:layout_width="46dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:onClick="calenderButtonPressed"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TechniciansnameLayout"
+        app:srcCompat="@drawable/calendar" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="saveButtonMaintenancep2"
+        android:text="SAVE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateTVmp2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
