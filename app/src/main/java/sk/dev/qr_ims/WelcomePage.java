@@ -27,6 +27,7 @@ public class WelcomePage extends AppCompatActivity {
         finish();
     }
     public  void  generateQrCode(View view){
+        //lokesh topper
         Intent intent = new Intent(WelcomePage.this, qrCodeGenerator.class);
         startActivity(intent);
         finish();
