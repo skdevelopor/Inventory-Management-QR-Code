@@ -44,14 +44,11 @@ public class qrScanner extends AppCompatActivity {
                     @Override
                     public void run() {
                         String qrStringValue = result.getText().toString();
-                        Toast.makeText(qrScanner.this, qrStringValue, Toast.LENGTH_SHORT).show();
-
                         qrValue.setText(qrStringValue);
-
                         Intent intent = new Intent(qrScanner.this,MaintenancePageTwo.class);
                         intent.putExtra("qrValue",qrStringValue);
                         startActivity(intent);
-                        finish();
+                     finish();
 
                     }
                 });
@@ -61,7 +58,6 @@ public class qrScanner extends AppCompatActivity {
         scannerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 mCodeScanner.startPreview();
                 qrValue.setText("value");
