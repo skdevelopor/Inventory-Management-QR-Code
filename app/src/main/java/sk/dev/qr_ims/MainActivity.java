@@ -40,7 +40,7 @@ FirebaseAuth mAuth;
             finish();
         }
         else if(currentUser!=null){
-            Intent intent = new Intent(MainActivity.this,menu.class);
+            Intent intent = new Intent(MainActivity.this,qrreadandgenerator.class);
             startActivity(intent);
             finish();
         }

@@ -152,8 +152,9 @@ FirebaseAuth mAuth;
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
-                        Toast.makeText(LogIn.this,"Logged in successfully", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LogIn.this,WelcomePage.class);
+                      Toast.makeText(LogIn.this,"Logged in successfully", Toast.LENGTH_SHORT).show();
+                      Intent intent = new Intent(LogIn.this,WelcomePage.class);
+
                         startActivity(intent);
                         finish();
                     }

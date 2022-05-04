@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QR_IMS">
         <activity
+            android:name=".qrsample"
+            android:exported="true" />
+        <activity
+            android:name=".qrreadandgenerator"
+            android:exported="true" />
+        <activity
             android:name=".MaintenancePageTwo"
             android:exported="true" />
         <activity

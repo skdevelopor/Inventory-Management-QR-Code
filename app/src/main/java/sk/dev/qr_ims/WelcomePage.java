@@ -15,7 +15,8 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
-        Intent intent = new Intent(WelcomePage.this, menu.class);
+      //  Intent intent = new Intent(WelcomePage.this, menu.class);
+        Intent intent = new Intent(WelcomePage.this,qrreadandgenerator.class);
         startActivity(intent);
         finish();
     }

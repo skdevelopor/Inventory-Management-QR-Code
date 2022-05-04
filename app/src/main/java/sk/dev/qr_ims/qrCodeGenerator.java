@@ -51,7 +51,7 @@ ImageView qrImage;
  }
     public void qrCodeScanner(View view){
 
-        Intent intent = new Intent(qrCodeGenerator.this, qrScanner.class);
+        Intent intent = new Intent(qrCodeGenerator.this,qrsample.class);
         startActivity(intent);
         finish();
     }
