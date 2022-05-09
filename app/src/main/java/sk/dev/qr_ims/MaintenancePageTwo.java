@@ -5,39 +5,48 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MaintenancePageTwo extends AppCompatActivity {
     TextView mid,mName,mId;
     String value;
     DatabaseReference mDatabase;
-    TextView dateMI;
-Button b1;
+    TextView dateMaintenanceTV;
+    TextView dateDueTV;
+    Button b1;
     TextInputLayout servDescription,TechName;
     EditText serDesET,TechNameET;
+    ImageButton MC,DC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +57,16 @@ Button b1;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mName = findViewById(R.id.mpMname);
         servDescription =findViewById(R.id.ServiceDescriptionLayout);
-                TechName =findViewById(R.id.TechniciansnameLayout);
+        TechName =findViewById(R.id.TechniciansnameLayout);
         serDesET = findViewById(R.id.ServiceDescriptionTextView);
         TechNameET=findViewById(R.id.techName);
         mId=findViewById(R.id.mpMiD);
-dateMI = findViewById(R.id.dateTVmp2);
-b1 = findViewById(R.id.button3);
+        dateMaintenanceTV = findViewById(R.id.dateOfMaintanenceTVmp2);
+        dateDueTV = findViewById(R.id.dateOfDueTVmp2);
+        b1 = findViewById(R.id.button3);
 
-
+        MC = findViewById(R.id.MaintenanceCalender);
+        DC = findViewById(R.id.DueCalender);
 
        mDatabase.child("Machines").orderByKey().equalTo(value).addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,12 +88,6 @@ b1 = findViewById(R.id.button3);
 
 
        });
-
-
-
-
-
-
 
 
     }
@@ -125,7 +130,7 @@ b1 = findViewById(R.id.button3);
         });
 
     }
-   public void calenderButtonPressed(View view){
+   public void calenderMaintenanceButtonPressed(View view){
        Calendar calendar = Calendar.getInstance();
        int mDay,mMonth,mYear;
        mYear= calendar.get(Calendar.YEAR);
@@ -134,15 +139,37 @@ b1 = findViewById(R.id.button3);
        DatePickerDialog datePickerDialog = new DatePickerDialog(MaintenancePageTwo.this, new DatePickerDialog.OnDateSetListener() {
            @Override
            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-               dateMI.setText(i2+"-"+i1+"-"+i);
+               i1=i1+1;
+               dateMaintenanceTV.setText(i2+"/"+i1+"/"+i);
            }
        },mYear,mMonth,mDay);
        datePickerDialog.show();
    }
+
+    public void calenderDueButtonPressed(View view){
+        Calendar calendar = Calendar.getInstance();
+        int mDay,mMonth,mYear;
+        mYear= calendar.get(Calendar.YEAR);
+        mMonth =calendar.get(Calendar.MONTH);
+        mDay =calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(MaintenancePageTwo.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                i1=i1+1;
+                dateDueTV.setText(i2+"/"+i1+"/"+i);
+            }
+        },mYear,mMonth,mDay);
+        datePickerDialog.show();
+    }
+
+
+
     public void saveButtonMaintenancep2(View view){
         String serviceDES=serDesET.getText().toString();
         String TechNaME =TechNameET.getText().toString();
-        String dateOfNextService = dateMI.getText().toString();
+        String dateOfNextService = dateDueTV.getText().toString();
+        String dateOfMaintenance =dateMaintenanceTV.getText().toString();
+
         if(TextUtils.isEmpty(serviceDES)){
             serDesET.setError("Description is Required");
            serDesET.requestFocus();
@@ -154,22 +181,47 @@ b1 = findViewById(R.id.button3);
 
 
         else if(TextUtils.isEmpty(dateOfNextService)){
-            dateMI.setError("Enter the Date");
-            dateMI.requestFocus();
+            dateDueTV.setError("Enter the Date");
+            dateDueTV.requestFocus();
         }
+        else if(TextUtils.isEmpty(dateOfMaintenance)){
+           dateMaintenanceTV.setError("Enter the Date");
+           dateMaintenanceTV.requestFocus();
+        }
+
+
+
         else{
            b1.setEnabled(false);
            serDesET.setEnabled(false);
             TechNameET.setEnabled(false);
-            addMaintananceDetails();
-                   }
+            b1.setVisibility(View.INVISIBLE);
+  dateMaintenanceTV.setEnabled(false);
+            dateDueTV.setEnabled(false);
+            MC.setEnabled(false);
+            DC.setEnabled(false);
+            addMaintananceDetails(serviceDES,TechNaME,dateOfNextService,dateOfMaintenance);
+            }
     }
 
-    private void addMaintananceDetails() {
+    private void addMaintananceDetails(String des,String techName, String DueDate,String DOMaintenance) {
+        MaintanaceDetails maintanaceDetails = new MaintanaceDetails(des,techName,DOMaintenance,DueDate);
+        mDatabase.child("Machines").child(value).child("MaintenanceDetails").push().setValue(maintanaceDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(MaintenancePageTwo.this, "Maintenance Details Added Successfully !!!!", Toast.LENGTH_SHORT).show();
+                  setRemainder(maintanaceDetails);
+            }
+        });
 
 
     }
 
+    private void setRemainder(MaintanaceDetails maintanaceDetails) {
 
-}
+
+    }
+        }
+
+
 

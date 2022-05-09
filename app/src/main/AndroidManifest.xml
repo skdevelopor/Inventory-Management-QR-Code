@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QR_IMS">
         <activity
+            android:name=".MaintenanceRecyclerView"
+            android:exported="true" />
+        <activity
             android:name=".qrsample"
             android:exported="true" />
         <activity

@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,19 +45,15 @@ SearchView searchView;
                 return true;
             }
         });
-        FirebaseRecyclerOptions<MachineDetails> options =
-                new FirebaseRecyclerOptions.Builder<MachineDetails>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Machines"), MachineDetails.class)
 
+
+
+        FirebaseRecyclerOptions<MachineDetails> options = new FirebaseRecyclerOptions.Builder<MachineDetails>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Machines"), MachineDetails.class)
                         .build();
 
         myAdapter = new AdapterClass(options);
        recyclerView.setAdapter(myAdapter);
-
-
-
-
-
 
         Handler handler = new Handler();
 

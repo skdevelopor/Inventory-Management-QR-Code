@@ -35,11 +35,7 @@ public class qrreadandgenerator extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    public void setNotification(View view){
-
-        Intent intent = new Intent(qrreadandgenerator.this,AsetNotifyDemo.class);
-        startActivity(intent);
-    }
+    
 
 
 }

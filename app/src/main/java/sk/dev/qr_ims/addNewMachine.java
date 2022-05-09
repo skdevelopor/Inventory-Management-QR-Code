@@ -76,7 +76,8 @@ public class addNewMachine extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(addNewMachine.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-       dateMI.setText(i2+"-"+i1+"-"+i);
+                i1=i1+1;
+              dateMI.setText(i2+"/"+i1+"/"+i);
             }
         },mYear,mMonth,mDay);
         datePickerDialog.show();
@@ -132,7 +133,7 @@ public class addNewMachine extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 progressDialog.dismiss();
-               imagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                imagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                   @Override
                   public void onSuccess(Uri uri) {
                   ImageUrl= uri.toString();
