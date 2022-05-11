@@ -172,7 +172,7 @@ FirebaseAuth mAuth;
                   public void onComplete(@NonNull Task<AuthResult> task) {
                       if(task.isSuccessful()){
                           Toast.makeText(Register.this,"USER REGISTERED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
-                          Intent intent = new Intent(Register.this,WelcomePage.class);
+                          Intent intent = new Intent(Register.this,menu.class);
                           startActivity(intent);
                           finish();
                       }

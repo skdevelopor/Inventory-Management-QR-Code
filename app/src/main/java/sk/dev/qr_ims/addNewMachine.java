@@ -172,6 +172,7 @@ public class addNewMachine extends AppCompatActivity {
 
     }
     public void printButtonMethod(View view){
+
         PrintHelper photoPrinter = new PrintHelper(addNewMachine.this);
         photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
         //Bitmap bitmap = imageView.getDrawingCache(  );

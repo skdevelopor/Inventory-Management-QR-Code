@@ -233,30 +233,22 @@ public class MaintenancePageTwo extends AppCompatActivity {
 
             }
         });
-
-
     }
     String dueDate;
     private void setRemainder(MaintanaceDetails maintanaceDetails) {
         dueDate = DueDateMinus1.toString()+" 20:30";
-
         Log.i("lklklk",dueDate);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         final Calendar cal = Calendar.getInstance();
         try {
             cal.setTime(formatter.parse(dueDate));
             String eventdate = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.DAY_OF_MONTH)+" "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE);
-
         }
         catch (ParseException e) {
             e.printStackTrace();
         }
         String Description1 = "Hello "+maintanaceDetails.getTechName()+",Today is the due Date of machine with id : \n"+value+"\nwith last service description :\n"
         +maintanaceDetails.getServiceDescription()+"\nLast maintenance Dated on : "+maintanaceDetails.getMaintenanceDate()+"\nTHE DUE DATE IS TOMORROW : \n"+maintanaceDetails.getDueDate() ;
-
-
-
-
 
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");

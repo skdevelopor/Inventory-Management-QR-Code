@@ -2,17 +2,34 @@ package sk.dev.qr_ims;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.print.PrintHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 
 public class AdapterClass extends FirebaseRecyclerAdapter<MachineDetails,AdapterClass.myViewHolder> {
@@ -37,20 +54,46 @@ public class AdapterClass extends FirebaseRecyclerAdapter<MachineDetails,Adapter
             }
         });
 
-
-
-
-
-
-
-
-
         holder.mName.setText(model.getMachineName());
         holder.mId.setText(model.getUId());
         holder.mDate.setText(model.getMachineInstallationDate());
 
 
-        Glide.with(holder.img.getContext()).load(model.getQrImageUrl()).placeholder(R.drawable.progress_bar).diskCacheStrategy(DiskCacheStrategy.NONE).into(holder.img);
+        Glide.with(holder.img.getContext()).load(model.getQrImageUrl()).apply(new RequestOptions().override(Target.SIZE_ORIGINAL)).placeholder(R.drawable.progress_bar).diskCacheStrategy(DiskCacheStrategy.NONE).into(holder.img);
+         holder.img.setOnLongClickListener(new View.OnLongClickListener() {
+             @Override
+             public boolean onLongClick(View view) {
+                 Context context = view.getContext();
+                 String imageUrl = model.getQrImageUrl();
+                 PopupMenu popupMenu = new PopupMenu(context, holder.img);
+                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                     @Override
+                     public boolean onMenuItemClick(MenuItem menuItem) {
+                         switch (menuItem.getItemId()) {
+                             case R.id.print1:
+
+                                 PrintHelper photoPrinter = new PrintHelper(context);
+                                 photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+                                 //Bitmap bitmap = imageView.getDrawingCache(  );
+                                 Bitmap bitmap = ((BitmapDrawable)holder.img.getDrawable()).getBitmap();
+                                 photoPrinter.printBitmap("test print",bitmap);
+
+
+
+                            }
+
+                         return true;
+                     }
+                 });
+                 popupMenu.show();
+                 return true;
+                 // Intent intent = new Intent(context,editChanges.class);
+                 //context.startActivity(intent);
+
+                
+             }
+         });
 
 
     }
