@@ -48,6 +48,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.TimeZone;
@@ -62,7 +63,7 @@ public class MaintenancePageTwo extends AppCompatActivity {
     TextInputLayout servDescription, TechName;
     EditText serDesET, TechNameET;
     ImageButton MC, DC;
-
+    String DueDateMinus1;
 
 
 
@@ -164,7 +165,7 @@ public class MaintenancePageTwo extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 i1 = i1 + 1;
-                dateMaintenanceTV.setText(i2 + "/" + i1 + "/" + i);
+                dateMaintenanceTV.setText(i + "/" + i1 + "/" + i2);
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -180,7 +181,10 @@ public class MaintenancePageTwo extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 i1 = i1 + 1;
-                dateDueTV.setText(i2 + "/" + i1 + "/" + i);
+                dateDueTV.setText(i + "/" + i1 + "/" + i2);
+
+                int dayminus1= i2-1;
+                DueDateMinus1 = i + "/" + i1 + "/" + dayminus1;
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -234,20 +238,55 @@ public class MaintenancePageTwo extends AppCompatActivity {
     }
     String dueDate;
     private void setRemainder(MaintanaceDetails maintanaceDetails) {
-       dueDate = maintanaceDetails.getDueDate().toString();
+        dueDate = DueDateMinus1.toString()+" 20:30";
+
+        Log.i("lklklk",dueDate);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        final Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(formatter.parse(dueDate));
+            String eventdate = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.DAY_OF_MONTH)+" "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE);
+
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String Description1 = "Hello "+maintanaceDetails.getTechName()+",Today is the due Date of machine with id : \n"+value+"\nwith last service description :\n"
+        +maintanaceDetails.getServiceDescription()+"\nLast maintenance Dated on : "+maintanaceDetails.getMaintenanceDate()+"\nTHE DUE DATE IS TOMORROW : \n"+maintanaceDetails.getDueDate() ;
+
+
+
+
+
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", cal.getTimeInMillis());
+        Log.i("totime1", String.valueOf(cal.getTimeInMillis()));
+
+        intent.putExtra("allDay", false);
+        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+        Log.i("totime2", String.valueOf(cal.getTimeInMillis()+60*60*1000));
+        intent.putExtra("title","Due Date Reminder For machine ID : " +value);
+        intent.putExtra("description",Description1);
+        startActivity(intent);
+
 
     }
 
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
