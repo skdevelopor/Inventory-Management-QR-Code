@@ -6,4 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".editChanges">
 
+    <Button
+        android:id="@+id/Editavebutton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="293dp"
+        android:onClick="EsaveButton"
+        android:text="submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editcalenderButton" />
+
+    <EditText
+        android:id="@+id/editMachineNameET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="242dp"
+        android:layout_marginBottom="17dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/editcalenderButton"
+        app:layout_constraintStart_toStartOf="@+id/editcalenderButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editdateO"
+        style="@android:style/Widget.EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="100dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editcalenderButton"
+        app:layout_constraintTop_toBottomOf="@+id/editMachineNameET" />
+
+    <ImageButton
+        android:id="@+id/editcalenderButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="101dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="35dp"
+        android:onClick="EcalenderButtonPressed"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/Editavebutton2"
+        app:layout_constraintEnd_toStartOf="@+id/editdateO"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editMachineNameET"
+        app:srcCompat="@drawable/calendar"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

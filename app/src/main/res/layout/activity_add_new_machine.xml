@@ -21,64 +21,66 @@
         android:id="@+id/MachineNameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="5dp"
         android:ems="10"
         android:hint="Machine Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qrImage2"
-        app:layout_constraintVertical_bias="0.163" />
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/dateTV"
+        app:layout_constraintEnd_toEndOf="@+id/dateTV" />
 
     <TextView
         android:id="@+id/dateTV"
         style="@android:style/Widget.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginBottom="52dp"
         android:hint="mm/dd/yyyy"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/savebutton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.18"
-        app:layout_constraintStart_toEndOf="@+id/calenderButton"
-        app:layout_constraintTop_toBottomOf="@+id/MachineNameET" />
+        app:layout_constraintStart_toEndOf="@+id/calenderButton" />
 
     <ImageButton
         android:id="@+id/calenderButton"
-        android:layout_width="46dp"
-        android:layout_height="44dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="112dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="53dp"
         android:onClick="calenderButtonPressed"
         android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/savebutton"
+        app:layout_constraintEnd_toStartOf="@+id/dateTV"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MachineNameET"
-        app:srcCompat="@drawable/calendar" />
+        app:layout_constraintTop_toTopOf="@+id/MachineNameET"
+        app:srcCompat="@drawable/calendar"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/savebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="270dp"
         android:onClick="saveButton"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/printQr"
-        app:layout_constraintTop_toBottomOf="@+id/dateTV" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/printQr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="25dp"
         android:onClick="printButtonMethod"
         android:text="print"
         app:layout_constraintEnd_toStartOf="@+id/savebutton"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calenderButton" />
 

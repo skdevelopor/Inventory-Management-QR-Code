@@ -2,6 +2,7 @@ package sk.dev.qr_ims;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
@@ -10,17 +11,18 @@ import android.view.WindowManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
-FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-
 
 
     }
@@ -29,17 +31,19 @@ FirebaseAuth mAuth;
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser==null){
+        if (currentUser == null) {
             Intent intent = new Intent(MainActivity.this, LogIn.class);
             startActivity(intent);
             finish();
-        }
-        else if(currentUser!=null){
-            Intent intent = new Intent(MainActivity.this,menu.class);
+        } else if (currentUser != null) {
+            Intent intent = new Intent(MainActivity.this, menu.class);
             startActivity(intent);
             finish();
         }
     }
 
 
+
+
 }
+
