@@ -42,6 +42,10 @@ public class qrsample extends AppCompatActivity {
                     public void run() {
                         String qrStringValue = result.getText().toString();
                         qrValue.setText(qrStringValue);
+                        Intent intent = new Intent(qrsample.this,MaintenancePageTwo.class);
+                        intent.putExtra("qrValue",qrStringValue);
+                        startActivity(intent);
+                        finish();
 
                     }
                 });

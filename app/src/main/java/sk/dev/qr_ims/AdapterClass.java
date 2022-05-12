@@ -31,12 +31,16 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -63,7 +67,6 @@ public class AdapterClass extends FirebaseRecyclerAdapter<MachineDetails,Adapter
                 Intent intent = new Intent(context,MaintenanceRecyclerView.class);
                 intent.putExtra("MId", model.getUId());
                 intent.putExtra("MName", model.getMachineName());
-
                 context.startActivity(intent);
             }
         });
@@ -123,16 +126,15 @@ holder.popUpMenuBtn.setOnClickListener(new View.OnClickListener() {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.deleteRow:
-                                   delete(place,model.getUId());
-
-                    case R.id.edit:
-                                   Intent intent = new Intent(context,editChanges.class);
+                                   delete(place,model.getUId(),model.getQrImageUrl());
+                                   break;
+                    case R.id.editDetails:
+                        Intent intent = new Intent(context,editChanges.class);
                         intent.putExtra("MId", model.getUId());
                         intent.putExtra("MNAME", model.getMachineName());
                         intent.putExtra("INSTALL", model.getMachineInstallationDate());
-
                         context.startActivity(intent);
-
+                          break;
 
                 }
                 return true;
@@ -193,10 +195,8 @@ holder.popUpMenuBtn.setOnClickListener(new View.OnClickListener() {
         }
     }
 
-    private void delete(int position, String time) {
-
+    private void delete(int position, String time,String iUrl) {
         DatabaseReference dbref= FirebaseDatabase.getInstance().getReference().child("Machines");
-
         Query query=dbref.child(time);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -209,7 +209,28 @@ holder.popUpMenuBtn.setOnClickListener(new View.OnClickListener() {
 
             }
         });
+
+        deleteImg(iUrl);
+
     }
 
+    private void deleteImg(String iUrl) {
+        FirebaseStorage mFS = FirebaseStorage.getInstance();
+        StorageReference photoRef = mFS.getReferenceFromUrl(iUrl);
+        photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i("deletedImg","success");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        });
+    }
 
 }
+
+
+

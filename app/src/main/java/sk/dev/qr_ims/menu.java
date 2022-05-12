@@ -31,5 +31,10 @@ public class menu extends AppCompatActivity {
         startActivity(intent);
 
     }
+    public void updateUsingQR(View view) {
+        Intent intent = new Intent(menu.this,qrsample.class);
+        startActivity(intent);
+
+    }
 
 }
