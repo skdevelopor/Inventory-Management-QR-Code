@@ -14,7 +14,7 @@
         android:onClick="EsaveButton"
         android:text="submit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editcalenderButton" />
 
@@ -59,4 +59,16 @@
         app:layout_constraintTop_toBottomOf="@+id/editMachineNameET"
         app:srcCompat="@drawable/calendar"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/Dustbin"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="28dp"
+        android:onClick="deleteBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_removei" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.media.audiofx.Equalizer;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -48,7 +48,8 @@ public class qrScanner extends AppCompatActivity {
                         Intent intent = new Intent(qrScanner.this,MaintenancePageTwo.class);
                         intent.putExtra("qrValue",qrStringValue);
                         startActivity(intent);
-                     finish();
+                        finish();
+
 
                     }
                 });
@@ -60,7 +61,7 @@ public class qrScanner extends AppCompatActivity {
             public void onClick(View view) {
 
                 mCodeScanner.startPreview();
-                qrValue.setText("value");
+
             }
         });
     }

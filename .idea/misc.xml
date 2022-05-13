@@ -12,7 +12,7 @@
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/drawable/search_bar_bg.xml" value="0.2" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/activity_add_new_machine.xml" value="0.2" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/activity_aset_notify_demo.xml" value="0.1814814814814815" />
-        <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/activity_edit_changes.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/activity_edit_changes.xml" value="0.7062146892655368" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/activity_log_in.xml" value="0.20102564102564102" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/activity_main.xml" value="0.17777777777777778" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/activity_maintenance_page.xml" value="0.1814814814814815" />
@@ -32,6 +32,7 @@
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/layout_dialog_edit_data.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/single_maintenance_row.xml" value="0.75" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/layout/single_row.xml" value="0.5" />
+        <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/menu/delete_popup.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/menu/popup_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/HOME/AndroidStudioProjects/QR_IMS/app/src/main/res/menu/popup_menu_edit_delete.xml" value="0.20416666666666666" />
       </map>

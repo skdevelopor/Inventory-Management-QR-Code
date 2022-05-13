@@ -124,9 +124,7 @@ public class MaintenancePageTwo extends AppCompatActivity {
 
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //  Intent intent = new Intent(MaintenancePageTwo.this,qrScanner.class);
-                        //    startActivity(intent);
-                        finish();
+                          finish();
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -229,7 +227,7 @@ public class MaintenancePageTwo extends AppCompatActivity {
             public void onSuccess(Void unused) {
                 Toast.makeText(MaintenancePageTwo.this, "Maintenance Details Added Successfully !!!!", Toast.LENGTH_SHORT).show();
                 setRemainder(maintanaceDetails);
-                finish();
+
 
             }
         });
@@ -261,7 +259,7 @@ public class MaintenancePageTwo extends AppCompatActivity {
         intent.putExtra("title","Due Date Reminder For machine ID : " +value);
         intent.putExtra("description",Description1);
         startActivity(intent);
-
+        finish();
 
     }
 

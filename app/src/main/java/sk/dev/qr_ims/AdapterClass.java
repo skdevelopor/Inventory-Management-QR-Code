@@ -132,7 +132,9 @@ holder.popUpMenuBtn.setOnClickListener(new View.OnClickListener() {
                         Intent intent = new Intent(context,editChanges.class);
                         intent.putExtra("MId", model.getUId());
                         intent.putExtra("MNAME", model.getMachineName());
+                        intent.putExtra("ImgUrl",model.getQrImageUrl());
                         intent.putExtra("INSTALL", model.getMachineInstallationDate());
+                        intent.putExtra("ActivityName","AdapterClass");
                         context.startActivity(intent);
                           break;
 
