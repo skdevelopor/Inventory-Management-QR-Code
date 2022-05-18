@@ -140,13 +140,14 @@ public class MaintenancePageTwo extends AppCompatActivity {
 
 
                 } else {
-                TechnicianName=task.getResult().child("engineersName").getValue().toString();
+                    EncyptionUsingAes encyptionUsingAes = new EncyptionUsingAes();
+                TechnicianName= encyptionUsingAes.decrypt(task.getResult().child("engineersName").getValue().toString());
                 TechNameET.setText(TechnicianName);
-                TechEmailId=task.getResult().child("engineersEmailId").getValue().toString();
-                TechPhoneNumber=task.getResult().child("engineersPhoneNumber").getValue().toString();
-                TechDesignation= task.getResult().child("engineersDesignation").getValue().toString();
-                TechUid = task.getResult().child("uid").getValue().toString();
-                profilePicUrl=task.getResult().child("engineersImageUrl").getValue().toString();
+                TechEmailId=encyptionUsingAes.decrypt(task.getResult().child("engineersEmailId").getValue().toString());
+                TechPhoneNumber=encyptionUsingAes.decrypt(task.getResult().child("engineersPhoneNumber").getValue().toString());
+                TechDesignation= encyptionUsingAes.decrypt(task.getResult().child("engineersDesignation").getValue().toString());
+                TechUid = encyptionUsingAes.decrypt(task.getResult().child("uid").getValue().toString());
+                profilePicUrl= encyptionUsingAes.decrypt(task.getResult().child("engineersImageUrl").getValue().toString());
 
                 }
 
