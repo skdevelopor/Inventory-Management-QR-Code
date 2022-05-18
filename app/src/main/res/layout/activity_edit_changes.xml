@@ -6,57 +6,105 @@
     android:layout_height="match_parent"
     tools:context=".editChanges">
 
-    <Button
-        android:id="@+id/Editavebutton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="293dp"
-        android:onClick="EsaveButton"
-        android:text="submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editcalenderButton" />
-
     <EditText
         android:id="@+id/editMachineNameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="242dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/editcalenderButton"
-        app:layout_constraintStart_toStartOf="@+id/editcalenderButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Dustbin"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/editmachineBnumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editMachineNameET" />
+
+    <Button
+        android:id="@+id/Editavebutton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="EsaveButton"
+        android:text="submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editcalenderButton" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Manufacturing Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.256"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/machineimgbtn2" />
+
+    <ImageView
+        android:id="@+id/editmachineImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editmachineBnumber" />
+
+    <Button
+        android:id="@+id/machineimgbtn2"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+        android:onClick="upLoadImgMachine"
+        android:text="Upload Machine Image"
+        app:icon="@drawable/upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editmachineImage" />
 
     <TextView
         android:id="@+id/editdateO"
         style="@android:style/Widget.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editcalenderButton"
-        app:layout_constraintTop_toBottomOf="@+id/editMachineNameET" />
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/editcalenderButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="101dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="35dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
         android:onClick="EcalenderButtonPressed"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/Editavebutton2"
-        app:layout_constraintEnd_toStartOf="@+id/editdateO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.204"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editMachineNameET"
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
         app:srcCompat="@drawable/calendar"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -64,8 +112,8 @@
         android:id="@+id/Dustbin"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:onClick="deleteBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -12,11 +12,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <TextView
+            android:id="@+id/mNameTV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Batch Number :"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/machineImageInSR"
+            app:layout_constraintTop_toBottomOf="@+id/mNameTV" />
+
+        <TextView
+            android:id="@+id/mbnumber"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="4dp"
+            android:text="abcdefghijk"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toEndOf="@+id/mNameTV2"
+            app:layout_constraintTop_toBottomOf="@+id/mName" />
+
         <ImageView
-            android:id="@+id/qrImageInSR"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/machineImageInSR"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_launcher_background" />
@@ -25,49 +49,58 @@
             android:id="@+id/mNameTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="11dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
             android:text="Machine Name :"
-            app:layout_constraintBottom_toTopOf="@+id/inDateTV"
-            app:layout_constraintStart_toEndOf="@+id/qrImageInSR"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/machineImageInSR"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/inDateTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="11dp"
+            android:layout_marginStart="4dp"
             android:text="Installation Date:"
-            app:layout_constraintBottom_toTopOf="@+id/MIdTV"
-            app:layout_constraintStart_toEndOf="@+id/qrImageInSR"
-            app:layout_constraintTop_toBottomOf="@+id/mNameTV" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/machineImageInSR"
+            app:layout_constraintTop_toTopOf="@+id/mDate" />
 
         <TextView
             android:id="@+id/MIdTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="11dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:text="Machine ID :"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/qrImageInSR"
-            app:layout_constraintTop_toBottomOf="@+id/inDateTV" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/machineImageInSR" />
 
         <TextView
             android:id="@+id/mDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="4dp"
             android:text="23-04-2022"
-            app:layout_constraintBottom_toTopOf="@+id/MIdTV"
+            android:textSize="14sp"
+            android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/inDateTV"
-            app:layout_constraintTop_toBottomOf="@+id/mNameTV" />
+            app:layout_constraintTop_toBottomOf="@+id/mbnumber" />
 
         <TextView
             android:id="@+id/mName"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="8dp"
             android:text="abcdefghijk"
-            app:layout_constraintBottom_toTopOf="@+id/inDateTV"
+            android:textSize="14sp"
+            android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/mNameTV"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,30 +108,32 @@
             android:id="@+id/mID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="7dp"
             android:text="idncsbcnjbclkcnjidchccbocubcoc"
-            android:textSize="8sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/MIdTV"
-            app:layout_constraintTop_toBottomOf="@+id/mDate"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/machineImageInSR" />
 
         <ImageView
             android:id="@+id/popUPBtn"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="-5dp"
-            android:layout_marginRight="5dp"
+            android:layout_width="48dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
             android:paddingLeft="5dp"
-            android:paddingTop="5dp"
             android:paddingRight="5dp"
-            android:paddingBottom="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/more" />
+
+        <ImageView
+            android:id="@+id/qrImageSR"
+            android:layout_width="47dp"
+            android:layout_height="49dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_launcher_background" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

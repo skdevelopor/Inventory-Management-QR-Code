@@ -6,62 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".MaintenanceRecyclerView">
 
+
+    <ImageView
+        android:id="@+id/mImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
     <TextView
         android:id="@+id/machineIdMRV"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="#FDD835"
-        android:padding="10dp"
         android:text="TextView"
-        android:textAlignment="center"
-        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/mNameTVMRV"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="#FDD835"
-        android:padding="10dp"
         android:text="TextView"
-        android:textAlignment="center"
-        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mImage"
         app:layout_constraintTop_toBottomOf="@+id/machineIdMRV" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/search_bar_bg"
         android:padding="10dp"
         android:text="Machine Maintenance Details : "
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mNameTVMRV" />
+        app:layout_constraintTop_toBottomOf="@+id/mImage" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MaintenanceRecyclerView"
-        android:layout_width="411dp"
-        android:layout_height="516dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
         app:layout_constraintVertical_bias="0.0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,18 +2,24 @@ package sk.dev.qr_ims;
 
 
 public class MachineDetails {
-    private  String UId;
-    private  String machineName;
-    private String  machineInstallationDate;
-    private String  QrImageUrl;
- MachineDetails(){
+    private String UId;
+    private String machineName;
+    private String machineInstallationDate;
+    private String qrImageUrl;
+    private String machineImageUrl;
+    private String machineBatchNumber;
 
- }
-    public MachineDetails(String UId, String machineName, String machineInstallationDate, String qrImageUrl) {
+
+
+    public MachineDetails(String UId, String machineName, String machineInstallationDate, String qrImageUrl, String machineImageUrl, String machineBatchNumber) {
         this.UId = UId;
         this.machineName = machineName;
         this.machineInstallationDate = machineInstallationDate;
-        QrImageUrl = qrImageUrl;
+        this.qrImageUrl = qrImageUrl;
+        this.machineImageUrl = machineImageUrl;
+        this.machineBatchNumber = machineBatchNumber;
+    }
+    public MachineDetails() {
     }
 
     public String getUId() {
@@ -41,10 +47,26 @@ public class MachineDetails {
     }
 
     public String getQrImageUrl() {
-        return QrImageUrl;
+        return qrImageUrl;
     }
 
     public void setQrImageUrl(String qrImageUrl) {
-        QrImageUrl = qrImageUrl;
+        this.qrImageUrl = qrImageUrl;
+    }
+
+    public String getMachineImageUrl() {
+        return machineImageUrl;
+    }
+
+    public void setMachineImageUrl(String machineImageUrl) {
+        this.machineImageUrl = machineImageUrl;
+    }
+
+    public String getMachineBatchNumber() {
+        return machineBatchNumber;
+    }
+
+    public void setMachineBatchNumber(String machineBatchNumber) {
+        this.machineBatchNumber = machineBatchNumber;
     }
 }

@@ -35,6 +35,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,12 +66,9 @@ public class MaintenancePageTwo extends AppCompatActivity {
     EditText serDesET, TechNameET;
     ImageButton MC, DC;
     String DueDateMinus1;
+    String dueDate;
+    String TechnicianName,TechEmailId,TechPhoneNumber,TechDesignation, TechUid,profilePicUrl;
 
-
-
-    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
-    private final static String default_notification_channel_id = "default" ;
-    final Calendar myCalendar = Calendar. getInstance () ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -114,7 +113,6 @@ public class MaintenancePageTwo extends AppCompatActivity {
 
 
     }
-
     private void setAlert() {
 
         new AlertDialog.Builder(MaintenancePageTwo.this)
@@ -131,9 +129,36 @@ public class MaintenancePageTwo extends AppCompatActivity {
                 .show();
 
     }
-
     private void getData() {
-        mDatabase.child("Machines").child(value).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userUid = user.getUid().toString();
+        mDatabase.child("EngineerDetails").child(userUid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+
+
+                } else {
+                TechnicianName=task.getResult().child("engineersName").getValue().toString();
+                TechNameET.setText(TechnicianName);
+                TechEmailId=task.getResult().child("engineersEmailId").getValue().toString();
+                TechPhoneNumber=task.getResult().child("engineersPhoneNumber").getValue().toString();
+                TechDesignation= task.getResult().child("engineersDesignation").getValue().toString();
+                TechUid = task.getResult().child("uid").getValue().toString();
+                profilePicUrl=task.getResult().child("engineersImageUrl").getValue().toString();
+
+                }
+
+
+            }
+        });
+
+
+
+
+        mDatabase.child("Machines").child(value).get().
+                addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -152,7 +177,6 @@ public class MaintenancePageTwo extends AppCompatActivity {
         });
 
     }
-
     public void calenderMaintenanceButtonPressed(View view) {
         Calendar calendar = Calendar.getInstance();
         int mDay, mMonth, mYear;
@@ -168,7 +192,6 @@ public class MaintenancePageTwo extends AppCompatActivity {
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
-
     public void calenderDueButtonPressed(View view) {
         Calendar calendar = Calendar.getInstance();
         int mDay, mMonth, mYear;
@@ -187,21 +210,17 @@ public class MaintenancePageTwo extends AppCompatActivity {
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
-
-
     public void saveButtonMaintenancep2(View view) {
         String serviceDES = serDesET.getText().toString();
-        String TechNaME = TechNameET.getText().toString();
+
         String dateOfNextService = dateDueTV.getText().toString();
         String dateOfMaintenance = dateMaintenanceTV.getText().toString();
 
         if (TextUtils.isEmpty(serviceDES)) {
             serDesET.setError("Description is Required");
             serDesET.requestFocus();
-        } else if (TextUtils.isEmpty(TechNaME)) {
-            TechNameET.setError("Technician name is required ");
-            TechNameET.requestFocus();
-        } else if (TextUtils.isEmpty(dateOfNextService)) {
+        }
+        else if (TextUtils.isEmpty(dateOfNextService)) {
             dateDueTV.setError("Enter the Date");
             dateDueTV.requestFocus();
         } else if (TextUtils.isEmpty(dateOfMaintenance)) {
@@ -216,12 +235,12 @@ public class MaintenancePageTwo extends AppCompatActivity {
             dateDueTV.setEnabled(false);
             MC.setEnabled(false);
             DC.setEnabled(false);
-            addMaintananceDetails(serviceDES, TechNaME, dateOfNextService, dateOfMaintenance);
+            addMaintananceDetails(serviceDES,TechnicianName,dateOfNextService, dateOfMaintenance);
         }
     }
-
     private void addMaintananceDetails(String des, String techName, String DueDate, String DOMaintenance) {
-        MaintanaceDetails maintanaceDetails = new MaintanaceDetails(des, techName, DOMaintenance, DueDate);
+        MaintanaceDetails maintanaceDetails = new MaintanaceDetails(des, techName, DOMaintenance, DueDate,TechEmailId,TechDesignation,TechPhoneNumber,profilePicUrl,TechUid);
+
         mDatabase.child("Machines").child(value).child("MaintenanceDetails").push().setValue(maintanaceDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -232,7 +251,6 @@ public class MaintenancePageTwo extends AppCompatActivity {
             }
         });
     }
-    String dueDate;
     private void setRemainder(MaintanaceDetails maintanaceDetails) {
         dueDate = DueDateMinus1.toString()+" 20:30";
         Log.i("lklklk",dueDate);
@@ -262,7 +280,6 @@ public class MaintenancePageTwo extends AppCompatActivity {
         finish();
 
     }
-
 }
 
 

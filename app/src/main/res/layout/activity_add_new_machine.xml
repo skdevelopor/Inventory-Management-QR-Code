@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/uploadImgBtn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".addNewMachine">
@@ -16,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@color/purple_200" />
 
+
     <EditText
         android:id="@+id/MachineNameET"
         android:layout_width="wrap_content"
@@ -27,62 +29,117 @@
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qrImage2" />
+        app:layout_constraintTop_toBottomOf="@+id/qrImage2"
+        app:layout_constraintVertical_bias="0.159" />
 
-    <TextView
-        android:id="@+id/dateTV"
-        style="@android:style/Widget.EditText"
+    <EditText
+        android:id="@+id/MachineBnumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="101dp"
-        android:hint="mm/dd/yyyy"
-        android:textSize="20sp"
-        android:textStyle="bold"
+
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Machine Batch Number"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/calenderButton"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MachineNameET" />
 
-    <ImageButton
-        android:id="@+id/calenderButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="38dp"
-        android:onClick="calenderButtonPressed"
-        android:scaleType="centerInside"
-        app:layout_constraintEnd_toStartOf="@+id/dateTV"
+    <Button
+        android:id="@+id/machineimgbtn"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Upload Machine Image"
+        app:icon="@drawable/upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MachineNameET"
-        app:srcCompat="@drawable/calendar"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/imgMachine" />
 
     <Button
         android:id="@+id/savebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:onClick="saveButton"
         android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.656"
+        app:layout_constraintHorizontal_bias="0.621"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTV" />
+        app:layout_constraintTop_toBottomOf="@+id/dateTV"
+        app:layout_constraintVertical_bias="0.004" />
 
     <Button
         android:id="@+id/printQr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:onClick="printButtonMethod"
         android:text="print"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.309"
+        app:layout_constraintHorizontal_bias="0.297"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calenderButton" />
+        app:layout_constraintTop_toBottomOf="@+id/calenderButton"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <ImageButton
+        android:id="@+id/calenderButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="38dp"
+        android:onClick="calenderButtonPressed"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toStartOf="@+id/dateTV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:srcCompat="@drawable/calendar"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/dateTV"
+        style="@android:style/Widget.EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="101dp"
+        android:hint="mm/dd/yyyy"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/calenderButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Manufacturing Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/machineimgbtn" />
+
+    <ImageView
+        android:id="@+id/imgMachine"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MachineBnumber" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

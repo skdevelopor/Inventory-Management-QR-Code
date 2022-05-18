@@ -1,11 +1,20 @@
 package sk.dev.qr_ims;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,6 +27,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,22 +43,33 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class editChanges extends AppCompatActivity {
+    Uri selectedImage;
     Button saveButton;
     TextView dateMI;
-    EditText mNameEt;
+    EditText mNameEt,mBatchNo;
     DatabaseReference machineDetailsDbRef;
     String mIdd;
     String Mname;
     String InstallationDate;
-    String ImgUrl;
-
+    Bitmap bitmapOfMachineImage;
+    String ImgUrl, mImageUrl;
+    String mBatchNumber;
     ImageView PopupmenuIV;
+    ImageView machineImage;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference =storage.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +77,15 @@ public class editChanges extends AppCompatActivity {
         setContentView(R.layout.activity_edit_changes);
             machineDetailsDbRef = FirebaseDatabase.getInstance().getReference().child("Machines");
         PopupmenuIV = findViewById(R.id.Dustbin);
+
         if(getIntent().getStringExtra("ActivityName").equals("AdapterClass")){
             Intent i = getIntent();
             mIdd= i.getStringExtra("MId");
             Mname = i.getStringExtra("MNAME");
             ImgUrl =i.getStringExtra("ImgUrl");
+            mImageUrl = i.getStringExtra("machineImgUrl");
             InstallationDate  = i.getStringExtra("INSTALL");
-
+            mBatchNumber = i.getStringExtra("mBatchNumber");
            }
 
 
@@ -69,16 +95,25 @@ public class editChanges extends AppCompatActivity {
             Mname = i.getStringExtra("machineName");
             ImgUrl= i.getStringExtra("machineQRUrl");
             InstallationDate  = i.getStringExtra("machineInstallationDate");
-
+            mBatchNumber = i.getStringExtra("mBatchNumber");
+            mImageUrl = i.getStringExtra("machineImgUrl");
 
         }
         dateMI=(TextView)findViewById(R.id.editdateO);
         mNameEt=findViewById(R.id.editMachineNameET);
+        mBatchNo = findViewById(R.id.editmachineBnumber);
         saveButton =findViewById(R.id.Editavebutton2);
         dateMI.setText(InstallationDate);
         mNameEt.setText(Mname);
+        mBatchNo.setText(mBatchNumber);
+        machineImage = findViewById(R.id.editmachineImage);
+        Glide.with(editChanges.this).load(mImageUrl).
+                apply(new RequestOptions().override(Target.SIZE_ORIGINAL))
+                .apply(RequestOptions.skipMemoryCacheOf(true)).
+                placeholder(R.drawable.progress_bar).
+                diskCacheStrategy(DiskCacheStrategy.NONE).into(machineImage);
 
-        PopupmenuIV.setOnClickListener(new View.OnClickListener() {
+       PopupmenuIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                    poPup();
@@ -111,44 +146,90 @@ public class editChanges extends AppCompatActivity {
         datePickerDialog.show();
     }
     String changedValueName;
+    String changedValueBNumber;
     String changedValueDate;
 
     public void EsaveButton(View view){
 
         changedValueName= mNameEt.getText().toString();
         changedValueDate= dateMI.getText().toString();
+        changedValueBNumber =mBatchNo.getText().toString();
         
         if(TextUtils.isEmpty(changedValueName)){
             mNameEt.setError("enter Machine Name");
             mNameEt.requestFocus();
         }
 
-        if(InstallationDate.equals(changedValueDate)&&Mname.equals(changedValueName)){
-            Toast.makeText(editChanges.this, "No changes were made", Toast.LENGTH_SHORT).show();
-            killActivity();
-        }
-        if(!Mname.equals(changedValueName)||!changedValueDate.equals(InstallationDate)){
-
-                machineDetailsDbRef.child(mIdd).child("machineName").setValue(changedValueName);
-
-                machineDetailsDbRef.child(mIdd).child("machineInstallationDate").setValue(changedValueDate);
-            Toast.makeText(editChanges.this, "All changes saved", Toast.LENGTH_SHORT).show();
-            killActivity();
-
-             }
+        if(!Mname.equals(changedValueName)||!changedValueDate.equals(InstallationDate)||!changedValueBNumber.equals(mBatchNumber)) {
+            machineDetailsDbRef.child(mIdd).child("machineName").setValue(changedValueName);
+            machineDetailsDbRef.child(mIdd).child("machineBatchNumber").setValue(changedValueBNumber);
+            machineDetailsDbRef.child(mIdd).child("machineInstallationDate").setValue(changedValueDate);
 
 
+
+       }
+
+killActivity();
 
     }
 
+    private void uploadNewImageIntoFirebase() {
+
+        uploadNewImage();
+    }
+
+    private void uploadNewImage() {
+        ProgressDialog pd = new ProgressDialog(editChanges.this);
+        pd.setMessage("loading");
+        pd.show();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BitmapDrawable drawable = (BitmapDrawable) machineImage.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        StorageReference imagesRef = storageReference.child("machinesImages/"+ mIdd+".jpg");
+        UploadTask uploadTask = imagesRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+               pd.dismiss();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+              imagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                                mImageUrl = uri.toString();
+                    }
+                });
+            }});
+    }
+
+
     private void killActivity() {
+        uploadNewImageIntoFirebase();
+        Toast.makeText(editChanges.this, "All changes saved", Toast.LENGTH_SHORT).show();
         if(getIntent().getStringExtra("ActivityName").equals("qrScanUpdate")) {
             Intent intent = new Intent(editChanges.this, menu.class);
             startActivity(intent);
             finish();
         }
+       else
+        {
+            Intent intent = new Intent(editChanges.this, menu.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
 
-  finish();
+        }
+
+
+
+
+
 
     }
     public  void poPup(){
@@ -193,7 +274,9 @@ public class editChanges extends AppCompatActivity {
 
 
 
+
     }
+
 
     private void deleteImg(String iUrl) {
         FirebaseStorage mFS = FirebaseStorage.getInstance();
@@ -214,7 +297,32 @@ public class editChanges extends AppCompatActivity {
 
 
 
-
+    public void upLoadImgMachine(View view){
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        someActivityResultLauncher.launch(photoPickerIntent);
+    }
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    selectedImage = Objects.requireNonNull(data).getData();
+                    InputStream imageStream = null;
+                    try {
+                        imageStream = getContentResolver().openInputStream(selectedImage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        bitmapOfMachineImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    BitmapFactory.decodeStream(imageStream);
+                    machineImage.setImageURI(selectedImage);// To display selected image in image view
+                }
+            });
 
 
 

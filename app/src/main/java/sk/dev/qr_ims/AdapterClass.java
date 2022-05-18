@@ -1,31 +1,25 @@
 package sk.dev.qr_ims;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.print.PrintHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
@@ -41,13 +35,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Observer;
-import java.util.concurrent.ExecutionException;
 
 
 public class AdapterClass extends FirebaseRecyclerAdapter<MachineDetails,AdapterClass.myViewHolder> {
@@ -67,22 +54,32 @@ public class AdapterClass extends FirebaseRecyclerAdapter<MachineDetails,Adapter
                 Intent intent = new Intent(context,MaintenanceRecyclerView.class);
                 intent.putExtra("MId", model.getUId());
                 intent.putExtra("MName", model.getMachineName());
+                intent.putExtra("ImageUrl",model.getMachineImageUrl());
+                intent.putExtra("machineBN",model.getMachineBatchNumber());
                 context.startActivity(intent);
             }
         });
-
+        holder.mBatchNumber.setText(model.getMachineBatchNumber());
         holder.mName.setText(model.getMachineName());
         holder.mId.setText(model.getUId());
         holder.mDate.setText(model.getMachineInstallationDate());
 
+        Glide.with(holder.qrImage.getContext()).load(model.getQrImageUrl()).
+                apply(new RequestOptions().override(Target.SIZE_ORIGINAL)).apply(RequestOptions.skipMemoryCacheOf(true)).
+                placeholder(R.drawable.progress_bar).diskCacheStrategy(DiskCacheStrategy.NONE).into(holder.qrImage);
 
-        Glide.with(holder.img.getContext()).load(model.getQrImageUrl()).apply(new RequestOptions().override(Target.SIZE_ORIGINAL)).placeholder(R.drawable.progress_bar).diskCacheStrategy(DiskCacheStrategy.NONE).into(holder.img);
-         holder.img.setOnLongClickListener(new View.OnLongClickListener() {
+        Glide.with(holder.machineImg.getContext()).load(model.getMachineImageUrl()).
+                apply(new RequestOptions().override(Target.SIZE_ORIGINAL)).apply(RequestOptions.skipMemoryCacheOf(true)).
+                placeholder(R.drawable.progress_bar).diskCacheStrategy(DiskCacheStrategy.NONE).into(holder.machineImg);
+
+
+
+         holder.qrImage.setOnLongClickListener(new View.OnLongClickListener() {
              @Override
              public boolean onLongClick(View view) {
                  Context context = view.getContext();
 
-                 PopupMenu popupMenu = new PopupMenu(context, holder.img);
+                 PopupMenu popupMenu = new PopupMenu(context, holder.qrImage);
                  popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
                  popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                      @Override
@@ -93,7 +90,7 @@ public class AdapterClass extends FirebaseRecyclerAdapter<MachineDetails,Adapter
                                  PrintHelper photoPrinter = new PrintHelper(context);
                                  photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
                                  //Bitmap bitmap = imageView.getDrawingCache(  );
-                                 Bitmap bitmap = ((BitmapDrawable)holder.img.getDrawable()).getBitmap();
+                                 Bitmap bitmap = ((BitmapDrawable)holder.qrImage.getDrawable()).getBitmap();
                                  photoPrinter.printBitmap("test print",bitmap);
 
 
@@ -127,16 +124,21 @@ holder.popUpMenuBtn.setOnClickListener(new View.OnClickListener() {
                 switch (menuItem.getItemId()) {
                     case R.id.deleteRow:
                                    delete(place,model.getUId(),model.getQrImageUrl());
+                                   delete(place,model.getUId(),model.getMachineImageUrl());
                                    break;
                     case R.id.editDetails:
                         Intent intent = new Intent(context,editChanges.class);
                         intent.putExtra("MId", model.getUId());
                         intent.putExtra("MNAME", model.getMachineName());
                         intent.putExtra("ImgUrl",model.getQrImageUrl());
+                        intent.putExtra("machineImgUrl",model.getMachineImageUrl());
+                        intent.putExtra("mBatchNumber",model.getMachineBatchNumber());
                         intent.putExtra("INSTALL", model.getMachineInstallationDate());
                         intent.putExtra("ActivityName","AdapterClass");
                         context.startActivity(intent);
-                          break;
+
+
+                       break;
 
                 }
                 return true;
@@ -182,18 +184,20 @@ holder.popUpMenuBtn.setOnClickListener(new View.OnClickListener() {
 
 
     class myViewHolder extends RecyclerView.ViewHolder{
-        ImageView img;
+        ImageView machineImg,qrImage ;
         ImageView popUpMenuBtn;
-        TextView mName,mDate,mId;
+        TextView mName,mDate,mId,mBatchNumber;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            img = (ImageView) itemView.findViewById(R.id.qrImageInSR);
+            machineImg= (ImageView) itemView.findViewById(R.id.machineImageInSR);
             mName =(TextView) itemView.findViewById(R.id.mName);
             mDate =(TextView) itemView.findViewById(R.id.mDate);
             mId =(TextView) itemView.findViewById(R.id.mID);
            popUpMenuBtn=(ImageView)itemView.findViewById(R.id.popUPBtn);
+           qrImage =(ImageView)itemView.findViewById(R.id.qrImageSR);
+           mBatchNumber =(TextView)itemView.findViewById(R.id.mbnumber);
         }
     }
 

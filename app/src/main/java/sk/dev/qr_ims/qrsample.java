@@ -163,15 +163,21 @@ public class qrsample extends AppCompatActivity {
 
 
                 } else {
-                    String MachineName= task.getResult().child("machineName").getValue().toString();
-                    String MachineID= task.getResult().child("uid").getValue().toString();
-                    String MachineInstallationDate=  task.getResult().child("machineInstallationDate").getValue().toString();
-                     String QrUrl = task.getResult().child("qrImageUrl").getValue().toString();
+         String MachineName= task.getResult().child("machineName").getValue().toString();
+         String MachineID= task.getResult().child("uid").getValue().toString();
+         String MachineInstallationDate=  task.getResult().child("machineInstallationDate").getValue().toString();
+         String QrUrl = task.getResult().child("qrImageUrl").getValue().toString();
+         String BatchNumber = task.getResult().child("machineBatchNumber").getValue().toString();
+         String MachineImageUrl = task.getResult().child("machineImageUrl").getValue().toString();
 
                      Intent intentFromQRUpdate= new Intent(qrsample.this, editChanges.class);
                      intentFromQRUpdate.putExtra("machineName",MachineName);
                      intentFromQRUpdate.putExtra("machineID",MachineID);
                     intentFromQRUpdate.putExtra("machineQRUrl",QrUrl);
+
+                    intentFromQRUpdate.putExtra("mBatchNumber",BatchNumber);
+                    intentFromQRUpdate.putExtra("machineImgUrl",MachineImageUrl);
+
                      intentFromQRUpdate.putExtra("machineInstallationDate",MachineInstallationDate);
                     intentFromQRUpdate.putExtra("ActivityName","qrScanUpdate");
                      startActivity(intentFromQRUpdate);

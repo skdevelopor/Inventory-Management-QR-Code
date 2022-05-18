@@ -100,6 +100,8 @@ SearchView searchView;
         myAdapter= new AdapterClass(options);
         myAdapter.startListening();
         recyclerView.setAdapter(myAdapter);
+
+
     }
 
 

@@ -4,12 +4,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
@@ -25,12 +30,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MaintanaceDetails,MainA
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   Context context = v.getContext();
-              //  Intent intent = new Intent(context,MaintenanceRecyclerView.class);
-               // intent.putExtra("MId", model.getUId());
-               // intent.putExtra("MName", model.getMachineName());
 
-                //context.startActivity(intent);
             }
         });
 
@@ -39,11 +39,16 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MaintanaceDetails,MainA
         holder.MaintenanceDateTV.setText(model.getMaintenanceDate());
         holder.TechnicianNameTV.setText(model.getTechName());
         holder.DueDateTV.setText(model.getDueDate());
+        holder.PhoneNumberTV.setText(model.getTechPhoneNumber());
+        holder.EmailId.setText(model.getTechEmailId());
+          Glide.with(holder.profilePic.getContext()).load(model.getTechProfilePic()).
+         apply(new RequestOptions().override(Target.SIZE_ORIGINAL)).apply(RequestOptions.skipMemoryCacheOf(true)).
+         placeholder(R.drawable.progress_bar).diskCacheStrategy(DiskCacheStrategy.NONE).into(holder.profilePic);
 
 
 
 
-    }
+        }
 
 
 
@@ -59,8 +64,8 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MaintanaceDetails,MainA
         class myViewHolder extends RecyclerView.ViewHolder{
 
 
-            TextView MaintenanceDescriptionTV,TechnicianNameTV ,MaintenanceDateTV,DueDateTV ;
-
+            TextView MaintenanceDescriptionTV,TechnicianNameTV ,MaintenanceDateTV,DueDateTV,PhoneNumberTV,EmailId;
+            ImageView profilePic;
             public myViewHolder(@NonNull View itemView) {
                 super(itemView);
 
@@ -69,7 +74,9 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MaintanaceDetails,MainA
                MaintenanceDescriptionTV =(TextView) itemView.findViewById(R.id.MdesSR);
                TechnicianNameTV=(TextView) itemView.findViewById(R.id.TechnameSR);
                DueDateTV =(TextView) itemView.findViewById(R.id.DueDateSR);
-
+               PhoneNumberTV=(TextView) itemView.findViewById(R.id.phoneNumberTVSMR);
+               EmailId=(TextView) itemView.findViewById(R.id.emailidsr);
+               profilePic=(ImageView)itemView.findViewById(R.id.ppengineer);
             }
         }
 
