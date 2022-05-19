@@ -4,6 +4,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -39,6 +41,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -50,9 +54,8 @@ import java.util.regex.Pattern;
 
 
 public class Register extends AppCompatActivity {
-
     FirebaseAuth mAuth;
-
+CardView bg;
      Uri selectedImage;
    String[] Designations = {"Service Engineer","Senior Service Engineer"};
    AutoCompleteTextView autoCompleteTextView;
@@ -62,13 +65,12 @@ public class Register extends AppCompatActivity {
    EditText REmail2,RPassword2,RPhoneNumber,RName  ;
    DatabaseReference EngDetailsDbRef;
     Button uploadPic;
-    Bitmap bitmapOfProfilePic;
+
     String password,Designation,email2,phoneNumber,username,mImageUrl;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference =storage.getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
 
         super.onCreate(savedInstanceState);
@@ -78,6 +80,7 @@ public class Register extends AppCompatActivity {
         tilDesignation = findViewById(R.id.designation);
         arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item,Designations);
         autoCompleteTextView.setAdapter(arrayAdapter);
+
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -91,6 +94,7 @@ public class Register extends AppCompatActivity {
         String  namePattern = "^[a-zA-Z\\s]+";
         uploadPic =findViewById(R.id.propicbtn);
         profile_pic = findViewById(R.id.propic);
+        bg=findViewById(R.id.PPCV);
         REmail2=findViewById(R.id.Remail2);
         tilEmail = findViewById(R.id.log_email);
 
@@ -434,31 +438,29 @@ public class Register extends AppCompatActivity {
         return (match.find() && match.group().equals(str));
     }
     public void upLoadProfilePicGallery(View view){
-
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        someActivityResultLauncher.launch(photoPickerIntent);
+        startCropAct();
     }
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    selectedImage = Objects.requireNonNull(data).getData();
-                    InputStream imageStream = null;
-                    try {
-                        imageStream = getContentResolver().openInputStream(selectedImage);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        bitmapOfProfilePic = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    BitmapFactory.decodeStream(imageStream);
-                    profile_pic.setImageURI(selectedImage);// To display selected image in image view
-                }
-            });
 
+
+    public void startCropAct(){
+        CropImage.activity().setAspectRatio(1,1)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                                profile_pic.setImageURI(resultUri);
+                                bg.setCardBackgroundColor(Color.parseColor("#B9FF00"));
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+    }
 }

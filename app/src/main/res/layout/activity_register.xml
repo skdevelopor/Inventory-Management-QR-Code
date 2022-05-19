@@ -185,22 +185,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/propicbtn" />
 
-            <TextView
-                android:id="@+id/Rlogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:onClick="loginpage"
-                android:text="Already registered ? click here to login"
-                android:textColor="#66ED34"
-                android:textSize="16sp"
-                android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.493"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/propic" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/log_phoneNumber"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -268,14 +252,63 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:id="@+id/propic"
+            <TextView
+                android:id="@+id/Rlogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:onClick="loginpage"
+                android:text="Already registered ? click here to login"
+                android:textColor="#66ED34"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Register" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/PPCV"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#FF0000"
+                app:cardCornerRadius="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/Rlogin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/propicbtn"
-                app:layout_constraintTop_toBottomOf="@+id/designation" />
+                app:layout_constraintTop_toBottomOf="@+id/designation">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view2"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:elevation="12dp"
+                    app:cardCornerRadius="45dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/propicbtn"
+                    app:layout_constraintTop_toBottomOf="@+id/designation">
+
+                    <ImageView
+                        android:id="@+id/propic"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/propicbtn"
+                        app:layout_constraintTop_toBottomOf="@+id/designation" />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </androidx.cardview.widget.CardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
