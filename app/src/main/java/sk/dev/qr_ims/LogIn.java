@@ -22,9 +22,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LogIn extends AppCompatActivity {
     TextInputLayout tilEmail,tilPassword;
+    String TechDesignation;
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     EditText REmail2,RPassword2 ;
 FirebaseAuth mAuth;
     EditText resetMail;
@@ -152,11 +158,9 @@ FirebaseAuth mAuth;
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
+                        getData();
                       Toast.makeText(LogIn.this,"Logged in successfully", Toast.LENGTH_SHORT).show();
-                      Intent intent = new Intent(LogIn.this,menu.class);
 
-                        startActivity(intent);
-                        finish();
                     }
                     else {
                         Toast.makeText(LogIn.this, "LOG IN ERROR:"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -166,6 +170,29 @@ FirebaseAuth mAuth;
         }
 
     }
+
+    public void getData() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userUid = user.getUid().toString();
+        mDatabase.child("EngineerDetails").child(userUid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                EncyptionUsingAes encyptionUsingAes = new EncyptionUsingAes();
+               TechDesignation= encyptionUsingAes.decrypt(task.getResult().child("engineersDesignation").getValue().toString());
+
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                Intent intent = new Intent(LogIn.this, menu.class);
+                intent.putExtra("designation",TechDesignation);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
     public void fPass(View view){
         resetMail = new EditText(view.getContext());
         AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
